@@ -19,12 +19,14 @@ class CustomUserManager(BaseUserManager):
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
+    ROLE_CHOICES = (("candidate", "Candidate"), ("interviewer", "Interviewer"), ("admin", "Admin"))
     email = models.EmailField(unique=True)
     first_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=30, blank=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES)
 
     objects = CustomUserManager()
 
@@ -33,3 +35,12 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+    def is_admin(self):
+        return self.role == 'admin'
+
+    def is_candidate(self):
+        return self.role == 'candidate'
+
+    def is_interviewer(self):
+        return self.role == 'interviewer'
