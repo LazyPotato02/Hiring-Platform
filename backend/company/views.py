@@ -2,13 +2,10 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from company.models import Company
 from company.serializers import CompanySerializer
 
-
-# Create your views here.
 class CompanyList(APIView):
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
@@ -18,7 +15,6 @@ class CompanyList(APIView):
             return [AllowAny()]
         return [IsAuthenticated()]
 
-    
     def get(self, request):
         companies = Company.objects.all()
         serializer = CompanySerializer(companies, many=True)
@@ -27,13 +23,7 @@ class CompanyList(APIView):
         return Response({'message': 'No companies found'}, status=status.HTTP_404_NOT_FOUND)
 
     def post(self, request):
-        jwt_auth = JWTAuthentication()
-        validated_token = jwt_auth.get_validated_token(
-            request.headers.get("Authorization").split(" ")[1]
-        )
-        user = jwt_auth.get_user(validated_token)
 
-        request.user = user
         if request.user.role != 'interviewer':
             return Response({"detail": "Only interviewers can create companies."}, status=403)
 

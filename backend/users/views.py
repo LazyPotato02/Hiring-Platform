@@ -13,7 +13,6 @@ from users.serializers import RegisterUserSerializer
 class RegisterView(CreateAPIView):
     serializer_class = RegisterUserSerializer
     permission_classes = (AllowAny,)
-    queryset = CustomUser.objects.all()
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -25,10 +24,6 @@ class RegisterView(CreateAPIView):
             return Response({'error': 'Error while parsing data'}, status=status.HTTP_400_BAD_REQUEST)
 
         user = serializer.save()
-
-        if not user.role:
-            user.role = 'candidate'
-            user.save()
 
         refresh = RefreshToken.for_user(user)
 
@@ -43,7 +38,6 @@ class RegisterView(CreateAPIView):
             "refresh": str(refresh),
             "access": str(refresh.access_token)
         }, status=status.HTTP_201_CREATED)
-
 
 class LogoutView(APIView):
     permission_classes = [IsAuthenticated]
