@@ -1,5 +1,5 @@
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -10,10 +10,15 @@ from company.serializers import CompanySerializer
 
 # Create your views here.
 class CompanyList(APIView):
-    permission_classes = [IsAuthenticated]
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
 
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            return [AllowAny()]
+        return [IsAuthenticated()]
+
+    
     def get(self, request):
         companies = Company.objects.all()
         serializer = CompanySerializer(companies, many=True)
@@ -40,6 +45,7 @@ class CompanyList(APIView):
 
 
 class CompanyDetail(APIView):
+    permission_classes = [IsAuthenticated]
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
 
