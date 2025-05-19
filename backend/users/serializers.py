@@ -8,7 +8,7 @@ from users.models import CustomUser
 class RegisterUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ('email', 'first_name', 'last_name', 'password')
+        fields = ('email', 'first_name', 'last_name', 'password','role')
 
     def validate_password(self, value):
         if len(value) < 8:
@@ -28,6 +28,7 @@ class RegisterUserSerializer(serializers.ModelSerializer):
             first_name=validated_data.get('first_name', ''),
             last_name=validated_data.get('last_name', ''),
             password=validated_data['password'],
+            role=validated_data['role'],
         )
         user.is_active = True
         user.save()
