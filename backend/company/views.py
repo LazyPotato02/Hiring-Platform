@@ -28,6 +28,12 @@ class CompanyList(APIView):
             return Response({"detail": "Only interviewers can create companies."}, status=403)
 
         serializer = CompanySerializer(data=request.data)
+        if not serializer.is_valid():
+            name_errors = serializer.errors.get('name', [])
+            if any("already exists" in str(e).lower() for e in name_errors):
+                return Response({'error': 'Company with that name already exists'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'Error while parsing data'}, status=status.HTTP_400_BAD_REQUEST)
+
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
