@@ -36,7 +36,6 @@ class CompanyList(APIView):
                 return Response({'error': 'Company with that name already exists'}, status=status.HTTP_400_BAD_REQUEST)
             return Response({'error': 'Error while parsing data'}, status=status.HTTP_400_BAD_REQUEST)
 
-
         if serializer.is_valid():
             company = serializer.save()
             CompanyMembership.objects.create(
@@ -87,8 +86,11 @@ class CompanyDetail(APIView):
 
     def delete(self, request, id):
         company = Company.objects.get(pk=id)
-        company.delete()
-        return Response({"message":"Company successfully deleted"},status=status.HTTP_204_NO_CONTENT)
+        if company:
+            company.delete()
+            return Response({"message": "Company successfully deleted"}, status=status.HTTP_204_NO_CONTENT)
+        return Response({"message": "No companies found"}, status=status.HTTP_404_NOT_FOUND)
+
 
 class AddUserToCompanyView(APIView):
     permission_classes = [IsAuthenticated]
@@ -101,7 +103,8 @@ class AddUserToCompanyView(APIView):
 
         membership = CompanyMembership.objects.filter(user=request.user, company=company).first()
         if not membership or membership.role not in ['creator', 'admin']:
-            return Response({'detail': 'You are not authorized to add users to this company.'}, status=status.HTTP_403_FORBIDDEN)
+            return Response({'detail': 'You are not authorized to add users to this company.'},
+                            status=status.HTTP_403_FORBIDDEN)
 
         user_id = request.data.get('user_id')
         role = request.data.get('role')

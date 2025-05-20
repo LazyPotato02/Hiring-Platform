@@ -8,3 +8,9 @@ class CompanySerializer(serializers.ModelSerializer):
         model = Company
         fields = '__all__'
 
+
+
+class CompanyJobSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Company
+        fields = ['id', 'name', 'description', 'website']
