@@ -1,0 +1,17 @@
+.navbar-list {
+    display: flex;
+    justify-content: space-between;
+    padding-inline-start: 0;
+    margin: 1rem 4rem ;
+}
+
+.navbar-item {
+    text-decoration: none;
+    color: #2563eb;
+    font-weight: bold;
+}
+
+.navbar-item-users {
+    display: flex;
+    gap: 1rem;
+}
