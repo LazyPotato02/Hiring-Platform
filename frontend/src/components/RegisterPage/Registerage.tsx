@@ -71,6 +71,7 @@ const RegisterPage: React.FC = () => {
                     required
                 />
 
+                <label htmlFor="role">Account Type</label>
                 <select name="role" id="role" value={role} onChange={handleRoleChange}>
                     <option value="candidate">Candidate</option>
                     <option value="interviewer">Interviewer</option>

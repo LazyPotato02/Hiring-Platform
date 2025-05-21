@@ -47,6 +47,23 @@
     outline: none;
     background-color: white;
 }
+.register-form select {
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: var(--input-bg);
+    transition: border 0.2s ease;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.register-form select:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    background-color: white;
+}
 
 .register-form button {
     background-color: var(--primary-color);
