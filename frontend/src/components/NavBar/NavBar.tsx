@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 import {useAuth} from "../../auth/AuthContect.tsx";
 
 const NavBar: React.FC = () => {
-    const { user,logout,loading } = useAuth();
+    const {user, logout, loading} = useAuth();
 
 
     return (
@@ -21,7 +21,7 @@ const NavBar: React.FC = () => {
                     ) : (
                         <>
                             <Link className="navbar-item" to={'/login'}>Login</Link>
-                            <Link className="navbar-item" to={'/'}>Register</Link>
+                            <Link className="navbar-item" to={'/register'}>Register</Link>
                         </>
                     )}
                 </div>

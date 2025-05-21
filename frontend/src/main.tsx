@@ -5,6 +5,7 @@ import LoginPage from "./components/LoginPage/LoginPage.tsx";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {AuthProvider} from "./auth/AuthContect.tsx";
 import NavBar from "./components/NavBar/NavBar.tsx";
+import RegisterPage from "./components/RegisterPage/Registerage.tsx";
 
 
 createRoot(document.getElementById('root')!).render(
@@ -14,6 +15,7 @@ createRoot(document.getElementById('root')!).render(
                 <NavBar/>
                 <Routes>
                     <Route path="login" element={<LoginPage />} />
+                    <Route path="register" element={<RegisterPage />} />
                 </Routes>
 
             </AuthProvider>
