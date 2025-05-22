@@ -2,8 +2,8 @@
     display: flex;
     justify-content: center;
     padding: 2rem;
-    background-color: #f9f9f9;
     flex-wrap: wrap;
+
 }
 .home-page-title{
     text-align: center;
@@ -14,7 +14,7 @@
     flex-wrap: wrap;
     gap: 2rem;
     justify-content: center;
-    max-width: 1200px;
+    max-width: 1300px;
 }
 
 .tech-stack-list {

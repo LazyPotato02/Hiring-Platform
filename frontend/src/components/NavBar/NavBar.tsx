@@ -9,25 +9,24 @@ const NavBar: React.FC = () => {
 
 
     return (
-        <div className="navbar-main">
+        <nav className="navbar-main">
             <ul className="navbar-list">
-                <Link className="navbar-item" to={'/'}>Home</Link>
+                <li><Link className="navbar-item" to="/">Home</Link></li>
 
-
-                <div className="navbar-item navbar-item-users">
-
-                    {loading ? null : user ? (
-                        <Link className="navbar-item" to={'/'} onClick={logout}>Logout</Link>
-                    ) : (
-                        <>
-                            <Link className="navbar-item" to={'/login'}>Login</Link>
-                            <Link className="navbar-item" to={'/register'}>Register</Link>
-                        </>
-                    )}
-                </div>
-
+                <li>
+                    <div className="navbar-item navbar-item-users">
+                        {loading ? null : user ? (
+                            <Link className="navbar-item" to="/" onClick={logout}>Logout</Link>
+                        ) : (
+                            <>
+                                <Link className="navbar-item" to="/login">Login</Link>
+                                <Link className="navbar-item" to="/register">Register</Link>
+                            </>
+                        )}
+                    </div>
+                </li>
             </ul>
-        </div>
+        </nav>
     )
 }
 

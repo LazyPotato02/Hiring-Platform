@@ -1,17 +1,20 @@
+.navbar-main {
+    padding: 1rem 0;
+    background-color: #ffffff;
+
+}
+
 .navbar-list {
     display: flex;
     justify-content: space-between;
-    padding-inline-start: 0;
-    margin: 1rem 4rem ;
+    list-style: none;
+    margin: 0;
+    padding: 0 4rem;
+    align-items: center;
 }
 
 .navbar-item {
     text-decoration: none;
     color: #2563eb;
     font-weight: bold;
-}
-
-.navbar-item-users {
-    display: flex;
-    gap: 1rem;
 }
