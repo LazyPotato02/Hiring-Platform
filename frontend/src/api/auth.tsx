@@ -1,13 +1,11 @@
 import axios from "axios";
 import type {User} from "../auth/AuthContect.tsx";
 
-const API_URL = "http://localhost:8000/users"; // смени с реалния backend адрес
+const API_URL = "http://localhost:8000/users";
 
-export async function getCurrentUser(token: string): Promise<User> {
+export async function getCurrentUser(): Promise<User> {
     const response = await axios.get(`${API_URL}/me/`, {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
+        withCredentials: true,
     });
     return response.data;
 }
@@ -34,13 +32,10 @@ export async function registerApi(email: string, first_name: string, last_name: 
     return response.data;
 }
 
-export async function logoutApi(accessToken: string | null, refreshToken: string | null) {
-    const response = await axios.post(`${API_URL}/logout/`, {
-        refreshToken,
-    }, {
-        withCredentials: true, headers: {
-            Authorization: `Bearer ${accessToken}`,
-        },
-    });
+
+export async function logoutApi() {
+    const response = await axios.post(`${API_URL}/logout/`,
+        {withCredentials: true,}
+    );
     return response.data;
 }

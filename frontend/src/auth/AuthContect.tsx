@@ -1,80 +1,65 @@
-import {createContext, useContext, useEffect, useState} from "react";
-import {clearToken, getRefreshToken, getToken} from "../utils/tokenUtils.tsx";
-import {getCurrentUser, logoutApi} from "../api/auth.tsx";
-
+import { createContext, useContext, useEffect, useState } from "react";
+import { getCurrentUser, logoutApi } from "../api/auth.tsx";
 
 export type User = {
     id: number;
     email: string;
-}
+    first_name: string;
+    last_name: string;
+    role: string;
+};
 
 interface AuthContextType {
     user: User | null;
     loading: boolean;
-    login: (accessToken: string, refreshToken: string) => Promise<void>;
-    register: (accessToken: string, refreshToken: string) => Promise<void>;
-    logout: () => void;
+    login: () => Promise<void>;
+    register: () => Promise<void>;
+    logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({children}) => {
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const token = getToken();
-        if (token) {
-            getCurrentUser(token)
-                .then(setUser)
-                .catch(() => clearToken())
-                .finally(() => setLoading(false));
-        } else {
-            setLoading(false);
-        }
+        getCurrentUser()
+            .then(setUser)
+            .catch(() => setUser(null))
+            .finally(() => setLoading(false));
     }, []);
 
-    const login = async (accessToken: string, refreshToken: string) => {
+    const login = async () => {
         try {
-            const user = await getCurrentUser(accessToken);
+            const user = await getCurrentUser();
             setUser(user);
-            localStorage.setItem("token", accessToken);
-            localStorage.setItem("refreshToken", refreshToken);
-            localStorage.setItem("user", JSON.stringify(user));
-
-        } catch (error) {
-            console.error("Login failed:", error);
-            clearToken();
+        } catch {
+            setUser(null);
         }
     };
 
-    const register = async (accessToken: string, refreshToken: string) => {
+    const register = async () => {
         try {
-            const user = await getCurrentUser(accessToken);
+            const user = await getCurrentUser();
             setUser(user);
-            localStorage.setItem("token", accessToken);
-            localStorage.setItem("refreshToken", refreshToken);
-            localStorage.setItem("user", JSON.stringify(user));
-
-        } catch (error) {
-            console.error("Register failed:", error);
-            clearToken();
+        } catch {
+            setUser(null);
         }
     };
-
 
     const logout = async () => {
-        const accessToken:string |null = getToken()
-        const refreshToken:string | null = getRefreshToken();
-        const logoutResponse = await logoutApi(accessToken,refreshToken)
-
-        console.log(logoutResponse)
-        clearToken();
-        setUser(null);
+        try {
+            await logoutApi();
+        } catch (e) {
+            console.warn("Logout failed:", e);
+        } finally {
+            setUser(null);
+        }
     };
 
     return (
-        <AuthContext.Provider value={{user, loading, login, register, logout}}>
+        <AuthContext.Provider value={{ user, loading, login, register, logout }}>
             {children}
         </AuthContext.Provider>
     );

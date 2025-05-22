@@ -2,7 +2,7 @@ import "./RegisterPage.css"
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {registerApi} from "../../api/auth.tsx";
-import {useAuth} from "../../auth/AuthContect.tsx"; // 👈 добави CSS файла
+import {useAuth} from "../../auth/AuthContect.tsx";
 
 
 const RegisterPage: React.FC = () => {
@@ -19,8 +19,8 @@ const RegisterPage: React.FC = () => {
         setError(null);
 
         try {
-            const {access, refresh} = await registerApi(email, firstName, lastName, password,role);
-            await register(access, refresh);
+            await registerApi(email, firstName, lastName, password,role);
+            await register();
             navigate("/");
         } catch {
             setError("Wrong email or password");
@@ -46,7 +46,7 @@ const RegisterPage: React.FC = () => {
                     required
                 />
 
-                <label htmlFor="firstName">firstName</label>
+                <label htmlFor="firstName">First Name</label>
                 <input
                     id="email"
                     type="text"
@@ -54,7 +54,7 @@ const RegisterPage: React.FC = () => {
                     onChange={(e) => setFirstName(e.target.value)}
                     required
                 />
-                <label htmlFor="lastName">lastName</label>
+                <label htmlFor="lastName">Last Name</label>
                 <input
                     id="email"
                     type="text"

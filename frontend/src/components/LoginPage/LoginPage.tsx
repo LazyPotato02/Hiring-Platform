@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginApi } from "../../api/auth.tsx";
 import "./LoginPage.css";
-import {useAuth} from "../../auth/AuthContect.tsx"; // 👈 добави CSS файла
+import {useAuth} from "../../auth/AuthContect.tsx";
 
 const LoginPage: React.FC = () => {
     const [email, setEmail] = useState("");
@@ -16,8 +16,8 @@ const LoginPage: React.FC = () => {
         setError(null);
 
         try {
-            const { access,refresh } = await loginApi(email, password);
-            await login(access,refresh);
+            await loginApi(email, password);
+            await login();
             navigate("/");
         } catch {
             setError("Wrong email or password");
