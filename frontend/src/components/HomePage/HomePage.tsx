@@ -1,5 +1,7 @@
 import {useEffect, useState} from "react";
 import {getTechStacks} from "../../api/jobs.tsx";
+import './HomePage.css'
+
 
 export interface Technology {
     id: number;
@@ -13,7 +15,7 @@ export interface TechCategory {
 }
 
 export function HomePage() {
-    const [techStacks,setTechStacks] = useState<TechCategory[]>([]);
+    const [techStacks, setTechStacks] = useState<TechCategory[]>([]);
     useEffect(() => {
         const fetchTechStack = async () => {
             try {
@@ -29,25 +31,27 @@ export function HomePage() {
     }, []);
 
 
+    return (
+        <>
+            <h1 className='home-page-title'>Job Board</h1>
+            <div className="home-page">
 
-    return(
-        <div className="HomePage">
-            <p>Home</p>
-
-            {techStacks.length > 0 && (
-                <div className="tech-stack">
-                    {techStacks.map((category) => (
-                        <div key={category.id}>
-                            <h3>{category.name}</h3>
-                            <div className="tech-list">
+                {techStacks.length > 0 && (
+                    <div className="tech-stack">
+                        {techStacks.map((category) => (
+                            <div className="tech-stack-list" key={category.id}>
+                                <h3>{category.name}</h3>
                                 {category.tech_stacks.map((tech) => (
-                                    <div key={tech.id}>{tech.name}</div>
+                                    <div className="tech-stack-item" key={tech.id}>
+                                        {tech.name}
+                                    </div>
                                 ))}
                             </div>
-                        </div>
-                    ))}
-                </div>
-            )}
-        </div>
+                        ))}
+                    </div>
+                )}
+            </div>
+        </>
+
     )
 }
