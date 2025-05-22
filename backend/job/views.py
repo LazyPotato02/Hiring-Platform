@@ -3,8 +3,8 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from job.models import Job
-from job.serializers import JobSerializer
+from job.models import Job, TechCategory
+from job.serializers import JobSerializer, TechCategorySerializer
 
 
 class JobViewSet(APIView):
@@ -12,9 +12,15 @@ class JobViewSet(APIView):
     queryset = Job.objects.all()
 
     def get(self, request):
-        serializer = JobSerializer(Job.objects.filter(is_active=True), many=True)
-        return Response(serializer.data)
+        tech_stack_ids = request.GET.get('tech_stack')
+        jobs = Job.objects.filter(is_active=True)
 
+        if tech_stack_ids:
+            ids = [int(id.strip()) for id in tech_stack_ids.split(',') if id.strip().isdigit()]
+            jobs = jobs.filter(tech_stack__id__in=ids).distinct()
+
+        serializer = JobSerializer(jobs, many=True)
+        return Response(serializer.data)
     def post(self, request):
         serializer = JobSerializer(data=request.data)
         if serializer.is_valid():
@@ -46,3 +52,9 @@ class JobDetailViewSet(APIView):
             job.delete()
             return Response({"message": "job successfully deleted"}, status=status.HTTP_204_NO_CONTENT)
         return Response({"message": "No job found"}, status=status.HTTP_404_NOT_FOUND)
+
+class TechCategoryListView(APIView):
+    def get(self, request):
+        categories = TechCategory.objects.prefetch_related('tech_stacks').all()
+        serializer = TechCategorySerializer(categories, many=True)
+        return Response(serializer.data)
