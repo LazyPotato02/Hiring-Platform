@@ -68,8 +68,7 @@ class TechCategoryListView(APIView):
 
 class GetJobsByTechStack(APIView):
     permission_classes = [AllowAny]
-
     def get(self, request, tech_stack):
-        jobs = Job.objects.filter(tech_stack__name__iexact=tech_stack, is_active=True).distinct()
+        jobs = Job.objects.filter(tech_stack__slug=tech_stack, is_active=True).distinct()
         serializer = JobSerializer(jobs, many=True)
         return Response(serializer.data)

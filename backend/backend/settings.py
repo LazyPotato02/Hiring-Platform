@@ -76,6 +76,8 @@ TEMPLATES = [
     },
 ]
 
+
+
 WSGI_APPLICATION = 'backend.wsgi.application'
 
 SIMPLE_JWT = {

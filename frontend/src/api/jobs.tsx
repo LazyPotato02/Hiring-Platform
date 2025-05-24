@@ -11,7 +11,7 @@ export async function getTechStacks() {
 }
 
 
-export async function getTechJobs(techName:string) {
+export async function getTechJobs(techName: string | undefined) {
     const response = await axios.get(`${API_URL}/get-techstack-jobs/${techName}`, {withCredentials: true});
     return response.data;
 }

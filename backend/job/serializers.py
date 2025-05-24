@@ -18,7 +18,7 @@ class JobSerializer(serializers.ModelSerializer):
 class TechStackSerializer(serializers.ModelSerializer):
     class Meta:
         model = TechStack
-        fields = ['id', 'name']
+        fields = ['id', 'name', 'slug']
 
 
 class TechCategorySerializer(serializers.ModelSerializer):
