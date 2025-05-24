@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {getTechStacks} from "../../api/jobs.tsx";
+import {getTechJobs, getTechStacks} from "../../api/jobs.tsx";
 import './HomePage.css'
 
 
@@ -31,6 +31,20 @@ export function HomePage() {
     }, []);
 
 
+    function getTechStacksJobs(techName: string) {
+
+        const fetchTechStackJobs = async () => {
+            try {
+                const jobs = getTechJobs(techName.toLowerCase());
+                console.log(jobs)
+            } catch (error) {
+                console.error("Error loading tech stacks", error);
+            }
+        }
+        fetchTechStackJobs()
+        return
+    }
+
     return (
         <>
             <h1 className='home-page-title'>Job Board</h1>
@@ -42,7 +56,8 @@ export function HomePage() {
                             <div className="tech-stack-list" key={category.id}>
                                 <h3>{category.name}</h3>
                                 {category.tech_stacks.map((tech) => (
-                                    <div className="tech-stack-item" key={tech.id}>
+                                    <div className="tech-stack-item" key={tech.id}
+                                         onClick={() => getTechStacksJobs(tech.name)}>
                                         {tech.name}
                                     </div>
                                 ))}

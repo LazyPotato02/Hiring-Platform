@@ -18,3 +18,8 @@
     color: #2563eb;
     font-weight: bold;
 }
+
+.navbar-item-users {
+    display: flex;
+    gap: 1rem;
+}

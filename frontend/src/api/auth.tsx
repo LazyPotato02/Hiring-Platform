@@ -34,8 +34,6 @@ export async function registerApi(email: string, first_name: string, last_name: 
 
 
 export async function logoutApi() {
-    const response = await axios.post(`${API_URL}/logout/`,
-        {withCredentials: true,}
-    );
+    const response = await axios.post(`${API_URL}/logout/`, {},{withCredentials: true});
     return response.data;
 }

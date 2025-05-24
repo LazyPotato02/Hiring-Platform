@@ -7,7 +7,7 @@ type Props = {
 };
 
 
-export function IsAuthGuard({children}: Props) {
+export function LoggedGuard({children}: Props) {
     const {user} = useAuth();
 
     if (user) {

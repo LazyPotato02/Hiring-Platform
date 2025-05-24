@@ -7,7 +7,7 @@ type Props = {
 };
 
 
-export function AuthorizationGuard({children}: Props) {
+export function NotLoggedGuard({children}: Props) {
     const {user} = useAuth();
 
     if (!user) {

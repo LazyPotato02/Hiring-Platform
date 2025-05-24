@@ -7,8 +7,8 @@ import {AuthProvider} from "./auth/AuthContect.tsx";
 import NavBar from "./components/NavBar/NavBar.tsx";
 import RegisterPage from "./components/RegisterPage/Registerage.tsx";
 import {HomePage} from "./components/HomePage/HomePage.tsx";
-import {IsAuthGuard} from "./guards/isAuthGuard.tsx";
-// import {AuthorizationGuard} from "./guards/authorizationGuard.tsx";
+import {LoggedGuard} from "./guards/LoggedGuard.tsx";
+// import {NotLoggedGuard} from "./guards/NotLoggedGuard.tsx";
 
 
 createRoot(document.getElementById('root')!).render(
@@ -19,8 +19,8 @@ createRoot(document.getElementById('root')!).render(
 
                 <Routes>
                     <Route path={''} element={<HomePage/>}/>
-                    <Route path="login" element={<IsAuthGuard><LoginPage/></IsAuthGuard>}/>
-                    <Route path="register" element={<IsAuthGuard><RegisterPage/></IsAuthGuard>}/>
+                    <Route path="login" element={<LoggedGuard><LoginPage/></LoggedGuard>}/>
+                    <Route path="register" element={<LoggedGuard><RegisterPage/></LoggedGuard>}/>
                 </Routes>
 
             </AuthProvider>

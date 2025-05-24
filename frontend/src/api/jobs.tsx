@@ -9,3 +9,9 @@ export async function getTechStacks() {
     );
     return response.data;
 }
+
+
+export async function getTechJobs(techName:string) {
+    const response = await axios.get(`${API_URL}/get-techstack-jobs/${techName}`, {withCredentials: true});
+    return response.data;
+}
