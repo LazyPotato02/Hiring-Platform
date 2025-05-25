@@ -28,7 +28,7 @@ export function JobDisplay() {
 
     return (
         <div>
-            <h2>Jobs using {techName}</h2>
+            <h2>Available Jobs</h2>
             {jobs.length === 0 ? (
                 <p>No jobs found.</p>
             ) : (

@@ -1,10 +1,10 @@
-import axios from "axios";
+import axiosInstance from "../interceptors/auth.interceptor";
 
 const API_URL = "http://localhost:8000/job";
 
 
 export async function getTechStacks() {
-    const response = await axios.get(`${API_URL}/tech-categories/`,
+    const response = await axiosInstance.get(`${API_URL}/tech-categories/`,
         {withCredentials: true}
     );
     return response.data;
@@ -12,6 +12,6 @@ export async function getTechStacks() {
 
 
 export async function getTechJobs(techName: string | undefined) {
-    const response = await axios.get(`${API_URL}/get-techstack-jobs/${techName}`, {withCredentials: true});
+    const response = await axiosInstance.get(`${API_URL}/get-techstack-jobs/${techName}`, {withCredentials: true});
     return response.data;
 }

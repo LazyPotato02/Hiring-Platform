@@ -1,10 +1,11 @@
-import axios from "axios";
+// import axios from "axios";
+import axiosInstance from "../interceptors/auth.interceptor";
 import type {User} from "../auth/AuthContect.tsx";
 
 const API_URL = "http://localhost:8000/users";
 
 export async function getCurrentUser(): Promise<User> {
-    const response = await axios.get(`${API_URL}/me/`, {
+    const response = await axiosInstance.get(`${API_URL}/me/`, {
         withCredentials: true,
     });
     return response.data;
@@ -12,7 +13,7 @@ export async function getCurrentUser(): Promise<User> {
 
 
 export async function loginApi(email: string, password: string) {
-    const response = await axios.post(`${API_URL}/login/`, {
+    const response = await axiosInstance.post(`${API_URL}/login/`, {
         email,
         password,
 
@@ -21,7 +22,7 @@ export async function loginApi(email: string, password: string) {
 }
 
 export async function registerApi(email: string, first_name: string, last_name: string, password: string, role: string) {
-    const response = await axios.post(`${API_URL}/register/`, {
+    const response = await axiosInstance.post(`${API_URL}/register/`, {
         email,
         first_name,
         last_name,
@@ -34,6 +35,6 @@ export async function registerApi(email: string, first_name: string, last_name: 
 
 
 export async function logoutApi() {
-    const response = await axios.post(`${API_URL}/logout/`, {},{withCredentials: true});
+    const response = await axiosInstance.post(`${API_URL}/logout/`, {},{withCredentials: true});
     return response.data;
 }
