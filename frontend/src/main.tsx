@@ -19,8 +19,8 @@ createRoot(document.getElementById('root')!).render(
 
                 <Routes>
                     <Route path={''} element={<HomePage/>}/>
+                    <Route path="/jobs" element={<JobDisplay />} />
                     <Route  path="/jobs/:techName" element={<JobDisplay/>}/>
-
                     <Route path="login" element={<LoggedGuard><LoginPage/></LoggedGuard>}/>
                     <Route path="register" element={<LoggedGuard><RegisterPage/></LoggedGuard>}/>
                 </Routes>

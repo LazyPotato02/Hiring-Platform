@@ -1,5 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from rest_framework import status
+from rest_framework.filters import OrderingFilter, SearchFilter
+from rest_framework.generics import ListAPIView
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -27,6 +30,7 @@ class JobViewSet(APIView):
 
         serializer = JobSerializer(jobs.distinct(), many=True)
         return Response(serializer.data)
+
     def post(self, request):
         serializer = JobSerializer(data=request.data)
         if serializer.is_valid():
@@ -59,16 +63,55 @@ class JobDetailViewSet(APIView):
             return Response({"message": "job successfully deleted"}, status=status.HTTP_204_NO_CONTENT)
         return Response({"message": "No job found"}, status=status.HTTP_404_NOT_FOUND)
 
+
 class TechCategoryListView(APIView):
     permission_classes = [AllowAny]
+
     def get(self, request):
         categories = TechCategory.objects.prefetch_related('tech_stacks').all()
         serializer = TechCategorySerializer(categories, many=True)
         return Response(serializer.data)
 
+
 class GetJobsByTechStack(APIView):
     permission_classes = [AllowAny]
+
     def get(self, request, tech_stack):
         jobs = Job.objects.filter(tech_stack__slug=tech_stack, is_active=True).distinct()
         serializer = JobSerializer(jobs, many=True)
         return Response(serializer.data)
+
+
+class JobPagination(PageNumberPagination):
+    page_size_query_param = 'limit'
+
+    def get_paginated_response(self, data):
+        return Response({
+            'results': data,
+            'total_pages': self.page.paginator.num_pages,
+            'current_page': self.page.number,
+        })
+
+class TechStackJobListView(ListAPIView):
+    serializer_class = JobSerializer
+    pagination_class = JobPagination
+    filter_backends = [OrderingFilter, SearchFilter]
+    ordering_fields = ['posted_at']
+    ordering = ['-posted_at']
+    search_fields = ['title', 'description']
+
+    def get_queryset(self):
+        tech_stack = self.kwargs.get('tech_stack')
+        return Job.objects.filter(tech_stack__slug=tech_stack)
+
+
+class GlobalJobListView(ListAPIView):
+    serializer_class = JobSerializer
+    pagination_class = JobPagination
+    filter_backends = [OrderingFilter, SearchFilter]
+    ordering_fields = ['posted_at']
+    ordering = ['-posted_at']
+    search_fields = ['title', 'description']
+
+    def get_queryset(self):
+        return Job.objects.filter(is_active=True)
