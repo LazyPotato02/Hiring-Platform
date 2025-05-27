@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import {getTechJobs} from "../../api/jobs.tsx";
-
+import './JobDisplay.css'
 type Job = {
     id: number;
     title: string;
@@ -27,20 +27,28 @@ export function JobDisplay() {
     }, [techName]);
 
     return (
-        <div>
-            <h2>Available Jobs</h2>
+        <div className="job-list-container">
+            <h2 className="job-list-title">Available Jobs</h2>
+
             {jobs.length === 0 ? (
-                <p>No jobs found.</p>
+                <p className="job-empty">No jobs found.</p>
             ) : (
-                <ul>
+                <ul className="job-list">
                     {jobs.map((job) => (
-                        <li key={job.id}>
-                            <h3>{job.title}</h3>
-                            <p>{job.description}</p>
+                        <li className="job-card" key={job.id}>
+                            <h3 className="job-title">{job.title}</h3>
+                            <p className="job-description">{job.description}</p>
                         </li>
                     ))}
                 </ul>
             )}
+
+            {/*<Pagination*/}
+            {/*    currentPage={currentPage}*/}
+            {/*    totalPages={totalPages}*/}
+            {/*    onPageChange={onPageChange}*/}
+            {/*/>*/}
         </div>
+
     );
 }

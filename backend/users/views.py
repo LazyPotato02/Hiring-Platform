@@ -32,7 +32,7 @@ class RegisterView(CreateAPIView):
         refresh = RefreshToken.for_user(user)
         access_token = refresh.access_token
 
-        access_exp = now() + timedelta(minutes=60)
+        access_exp = now() + timedelta(minutes=15)
         refresh_exp = now() + timedelta(days=7)
 
         response = Response({
@@ -81,7 +81,7 @@ class LoginView(APIView):
         # Получаваме потребителя (от Token serializer-а)
         user = CustomUser.objects.get(email=request.data["email"])
 
-        access_exp = now() + timedelta(minutes=60)
+        access_exp = now() + timedelta(minutes=15)
         refresh_exp = now() + timedelta(days=7)
 
         response = Response({
@@ -139,6 +139,9 @@ class LogoutView(APIView):
 
 
 class RefreshAccessTokenView(APIView):
+
+    permission_classes = [AllowAny]
+
     def post(self, request):
         refresh_token = request.COOKIES.get("refresh_token")
         if not refresh_token:
@@ -147,7 +150,7 @@ class RefreshAccessTokenView(APIView):
         try:
             refresh = RefreshToken(refresh_token)
             new_access = refresh.access_token
-            access_exp = now() + timedelta(minutes=60)
+            access_exp = now() + timedelta(minutes=15)
 
             response = Response({"message": "Access token refreshed"}, status=status.HTTP_200_OK)
             response.set_cookie(
@@ -160,7 +163,9 @@ class RefreshAccessTokenView(APIView):
             )
             return response
         except Exception as e:
-            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            response = Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            response.delete_cookie("access_token")
+            return response
 
 class MeView(APIView):
     permission_classes = [IsAuthenticated]
