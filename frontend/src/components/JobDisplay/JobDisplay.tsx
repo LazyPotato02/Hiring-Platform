@@ -48,7 +48,7 @@ export function JobDisplay() {
     return (
         <div className="job-list-container">
             <h2 className="job-list-title">
-                {techName ? `Available Jobs for ${techName}` : "Available Jobs"}
+                {techName ? `Available Jobs for ${techName.toUpperCase()}` : "Available Jobs"}
             </h2>
 
             {jobs.length === 0 ? (
