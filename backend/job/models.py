@@ -3,6 +3,7 @@ from django.utils.text import slugify
 
 from company.models import Company
 
+from users.models import CustomUser
 
 class TechCategory(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -33,3 +34,4 @@ class Job(models.Model):
     tech_stack = models.ManyToManyField(TechStack, related_name="jobs")
     is_active = models.BooleanField(default=True)
     posted_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey("users.CustomUser", on_delete=models.CASCADE,default=1)
