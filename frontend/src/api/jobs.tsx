@@ -11,10 +11,10 @@ export async function getTechStacks() {
 }
 
 
-export async function getTechJobs(techName: string | undefined) {
-    const response = await axiosInstance.get(`${API_URL}/get-techstack-jobs/${techName}`, {withCredentials: true});
-    return response.data;
-}
+// export async function getTechJobs(techName: string | undefined) {
+//     const response = await axiosInstance.get(`${API_URL}/get-techstack-jobs/${techName}`, {withCredentials: true});
+//     return response.data;
+// }
 
 export async function fetchPaginatedJobs(page: number = 1, limit: number = 5, search: string = "") {
     const response = await axiosInstance.get(`${API_URL}/jobs/`, {

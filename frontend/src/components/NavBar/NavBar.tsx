@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import './NavBar.css';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../auth/AuthContect.tsx";
@@ -9,8 +9,11 @@ const NavBar: React.FC = () => {
     const location = useLocation();
 
     const [searchValue, setSearchValue] = useState("");
+    const userTyped = useRef(false);  // ✅ track user input
 
     useEffect(() => {
+        if (!userTyped.current) return; // ❌ skip on initial load
+
         const timeout = setTimeout(() => {
             const params = new URLSearchParams(location.search);
             if (searchValue) {
@@ -24,7 +27,7 @@ const NavBar: React.FC = () => {
             } else {
                 navigate(`/jobs?search=${encodeURIComponent(searchValue)}`);
             }
-        }, 500); // ⏱ debounce: 500ms
+        }, 500);
 
         return () => clearTimeout(timeout);
     }, [searchValue]);
@@ -41,7 +44,10 @@ const NavBar: React.FC = () => {
                             type="text"
                             name="search"
                             value={searchValue}
-                            onChange={(e) => setSearchValue(e.target.value)}
+                            onChange={(e) => {
+                                userTyped.current = true; // ✅ mark user interaction
+                                setSearchValue(e.target.value);
+                            }}
                             placeholder="Search jobs..."
                         />
                     </form>
