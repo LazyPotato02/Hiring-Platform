@@ -9,10 +9,10 @@ const NavBar: React.FC = () => {
     const location = useLocation();
 
     const [searchValue, setSearchValue] = useState("");
-    const userTyped = useRef(false);  // ✅ track user input
+    const userTyped = useRef(false);
 
     useEffect(() => {
-        if (!userTyped.current) return; // ❌ skip on initial load
+        if (!userTyped.current) return;
 
         const timeout = setTimeout(() => {
             const params = new URLSearchParams(location.search);
@@ -45,7 +45,7 @@ const NavBar: React.FC = () => {
                             name="search"
                             value={searchValue}
                             onChange={(e) => {
-                                userTyped.current = true; // ✅ mark user interaction
+                                userTyped.current = true;
                                 setSearchValue(e.target.value);
                             }}
                             placeholder="Search jobs..."

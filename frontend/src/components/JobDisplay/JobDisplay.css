@@ -49,7 +49,12 @@ h2{
     color: #111827;
     margin-bottom: 0.5rem;
 }
-
+.tech-icon {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 1.2rem;
+}
 .job-description {
     color: #4b5563;
     font-size: 0.95rem;
