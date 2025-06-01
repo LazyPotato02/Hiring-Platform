@@ -50,3 +50,7 @@
 .navbar-search-button:hover {
     background-color: #1d4ed8;
 }
+.navbar-left-items{
+    display: flex;
+    gap: 1rem;
+}

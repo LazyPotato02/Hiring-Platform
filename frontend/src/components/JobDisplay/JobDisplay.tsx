@@ -31,12 +31,12 @@ const techIconMap: Record<string, keyof typeof Icons> = {
     react: 'SiReact',
     angular: 'SiAngular',
     vuejs: 'SiVuedotjs',
-    devops: 'SiJenkins', // примерна DevOps иконка
-    'database-engineer': 'SiMysql', // или SiPostgresql
-    cybersecurity: 'SiHackthebox', // или друга близка
-    sysadmin: 'SiGnubash', // или терминален инструмент
+    devops: 'SiJenkins',
+    'database-engineer': 'SiMysql',
+    cybersecurity: 'SiHackthebox',
+    sysadmin: 'SiGnubash',
     'automation-qa': 'SiCypress',
-    'manual-qa': 'SiTestinglibrary', // или друга близка
+    'manual-qa': 'SiTestinglibrary',
     'etldata-warehouse': 'SiApacheairflow',
     'big-data': 'SiApachehadoop',
     'bidata-visualization': 'SiTableau',
@@ -45,9 +45,9 @@ const techIconMap: Record<string, keyof typeof Icons> = {
     salesforce: 'SiSalesforce',
     ios: 'SiAppstore',
     android: 'SiAndroid',
-    'it-business-analyst': 'SiMicrostrategy', // условна
-    'product-management': 'SiProducthunt', // условна
-    'product-owner': 'SiProducthunt', // условна
+    'it-business-analyst': 'SiMicrostrategy',
+    'product-management': 'SiProducthunt',
+    'product-owner': 'SiProducthunt',
     'tech-writer': 'SiReadthedocs',
     'hardware-and-engineering': 'SiRaspberrypi',
     'customer-support': 'SiZendesk',
@@ -92,7 +92,7 @@ const getTechColor = (tech: string): string => {
         'ui-ux': '#F24E1E',
     };
 
-    return colors[tech.toLowerCase()] || '#999'; // default gray
+    return colors[tech.toLowerCase()] || '#999';
 };
 
 

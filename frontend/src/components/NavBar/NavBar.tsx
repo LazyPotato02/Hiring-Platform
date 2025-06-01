@@ -10,6 +10,16 @@ const NavBar: React.FC = () => {
 
     const [searchValue, setSearchValue] = useState("");
     const userTyped = useRef(false);
+    const [isUserInterviewer, setIsUserInterviewer] = useState(false);
+
+    useEffect(() => {
+        if (user && user.role === 'interviewer') {
+            setIsUserInterviewer(true);
+        } else {
+            setIsUserInterviewer(false);
+        }
+    }, [user]);
+
 
     useEffect(() => {
         if (!userTyped.current) return;
@@ -29,13 +39,20 @@ const NavBar: React.FC = () => {
             }
         }, 500);
 
+
         return () => clearTimeout(timeout);
     }, [searchValue]);
 
     return (
         <nav className="navbar-main">
             <ul className="navbar-list">
-                <li><Link className="navbar-item" to="/">Home</Link></li>
+                <div className="navbar-left-items">
+                    <li><Link className="navbar-item" to="/">Home</Link></li>
+                    {isUserInterviewer && (
+                        <li><Link className="navbar-item" to="/jobs/add">Add Job</Link></li>
+                    )}
+                </div>
+
 
                 <li>
                     <form className="navbar-search-form" onSubmit={(e) => e.preventDefault()}>

@@ -9,6 +9,8 @@ import RegisterPage from "./components/RegisterPage/Registerage.tsx";
 import {HomePage} from "./components/HomePage/HomePage.tsx";
 import {LoggedGuard} from "./guards/LoggedGuard.tsx";
 import {JobDisplay} from "./components/JobDisplay/JobDisplay.tsx";
+import {AddJobPage} from "./components/AddJobPage/AddJobPage.tsx";
+import {RequireRole} from "./guards/roleGuard.tsx";
 
 
 createRoot(document.getElementById('root')!).render(
@@ -21,6 +23,8 @@ createRoot(document.getElementById('root')!).render(
                     <Route path={''} element={<HomePage/>}/>
                     <Route path="/jobs" element={<JobDisplay />} />
                     <Route  path="/jobs/:techName" element={<JobDisplay/>}/>
+                    <Route path="/jobs/add" element={<RequireRole><AddJobPage /></RequireRole>} />
+
                     <Route path="login" element={<LoggedGuard><LoginPage/></LoggedGuard>}/>
                     <Route path="register" element={<LoggedGuard><RegisterPage/></LoggedGuard>}/>
                 </Routes>
