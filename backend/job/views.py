@@ -32,10 +32,16 @@ class JobViewSet(APIView):
         return Response(serializer.data)
 
     def post(self, request):
+        tech_stack_data = request.data.pop('tech_stack', [])
+
         serializer = JobSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            job = serializer.save()
+            if tech_stack_data:
+                tech_stack_objs = TechStack.objects.filter(id__in=tech_stack_data)
+                job.tech_stack.set(tech_stack_objs)
+            return Response(JobSerializer(job).data, status=status.HTTP_201_CREATED)
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 

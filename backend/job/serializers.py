@@ -13,8 +13,10 @@ class TechStackSerializer(serializers.ModelSerializer):
 
 class JobSerializer(serializers.ModelSerializer):
     company = serializers.PrimaryKeyRelatedField(queryset=Company.objects.all())
-    tech_stack = TechStackSerializer(many=True, read_only=True)
-
+    tech_stack = serializers.PrimaryKeyRelatedField(
+        queryset=TechStack.objects.all(),
+        many=True
+    )
     class Meta:
         model = Job
         fields = '__all__'

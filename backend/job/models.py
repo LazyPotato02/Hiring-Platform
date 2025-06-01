@@ -28,7 +28,6 @@ class TechStack(models.Model):
 
 
 class Job(models.Model):
-    company = models.ForeignKey(Company, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     description = models.TextField()
     tech_stack = models.ManyToManyField(TechStack, related_name="jobs")
