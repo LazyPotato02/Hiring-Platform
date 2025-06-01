@@ -165,9 +165,8 @@ textarea {
 /*    cursor: pointer;*/
 /*}*/
 
-.tech-stack-list {
+.add-job-tech-list {
     list-style: none;
-    padding: 0;
     margin-top: 0.5rem;
     display: flex;
     flex-direction: column;

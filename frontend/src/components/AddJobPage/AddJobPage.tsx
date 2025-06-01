@@ -1,15 +1,20 @@
 import {useState} from "react";
 import './AddJobPage.css'
-type JobFormData = {
+import {createJob} from "../../api/jobs.tsx";
+import {useNavigate} from "react-router-dom";
+export type JobFormData = {
     title: string;
     description: string;
-    tech_stack: number[];
+    tech_stack_ids: number[];
     is_active: boolean;
     created_by: number;
 };
 
 
 export function AddJobPage() {
+    const navigate = useNavigate();
+
+
     const TECH_STACKS = [
         {id: 1, name: "Java"},
         {id: 2, name: ".NET"},
@@ -52,7 +57,7 @@ export function AddJobPage() {
     const [form, setForm] = useState<JobFormData>({
         title: "",
         description: "",
-        tech_stack: [],
+        tech_stack_ids: [],
         is_active: true,
         created_by: 1,
     });
@@ -84,7 +89,10 @@ export function AddJobPage() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log("Submitted job:", form);
+        createJob(form)
+        navigate('/')
+
+
     };
 
 
@@ -117,9 +125,9 @@ export function AddJobPage() {
                 <div className="form-group">
                     <label className="form-label">Tech Stack</label>
 
-                    {form.tech_stack.length > 0 && (
+                    {form.tech_stack_ids.length > 0 && (
                         <div className="selected-tags">
-                            {form.tech_stack.map((id) => {
+                            {form.tech_stack_ids.map((id) => {
                                 const tech = TECH_STACKS.find((t) => t.id === id);
                                 return tech ? (
                                     <span key={id} className="tag">
@@ -130,9 +138,9 @@ export function AddJobPage() {
                         </div>
                     )}
 
-                    <ul className="tech-stack-list">
+                    <ul className="add-job-tech-list">
                         {TECH_STACKS.map((stack) => {
-                            const isSelected = form.tech_stack.includes(stack.id);
+                            const isSelected = form.tech_stack_ids.includes(stack.id);
                             return (
                                 <li key={stack.id} className="tech-stack-item">
                                     <span>{stack.name}</span>
@@ -142,9 +150,9 @@ export function AddJobPage() {
                                         onClick={() => {
                                             setForm((prev) => ({
                                                 ...prev,
-                                                tech_stack: isSelected
-                                                    ? prev.tech_stack.filter((id) => id !== stack.id)
-                                                    : [...prev.tech_stack, stack.id],
+                                                tech_stack_ids: isSelected
+                                                    ? prev.tech_stack_ids.filter((id) => id !== stack.id)
+                                                    : [...prev.tech_stack_ids, stack.id]
                                             }));
                                         }}
                                     >

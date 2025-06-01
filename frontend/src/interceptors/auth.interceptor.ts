@@ -10,14 +10,17 @@ axiosInstance.interceptors.response.use(
     async error => {
         const originalRequest = error.config;
 
-        if (
-            error.response?.status === 401 &&
-            !originalRequest._retry &&
-            !originalRequest.url.includes('/users/refresh-token/')
-        ) {
+        const isAuthError = error.response?.status === 401;
+        const isRetryable = !originalRequest._retry;
+        const isNotRefreshEndpoint = !originalRequest.url.includes('/users/refresh-token/');
+
+        const isPublicEndpoint =
+            originalRequest.url.includes('/job/jobs');
+
+        if (isAuthError && isRetryable && isNotRefreshEndpoint && !isPublicEndpoint) {
             originalRequest._retry = true;
             try {
-                await axiosInstance.post('/users/refresh-token/', {},{withCredentials: true});
+                await axiosInstance.post('/users/refresh-token/', {}, { withCredentials: true });
                 return axiosInstance(originalRequest);
             } catch (refreshError) {
                 if (window.location.pathname !== '/login') {
@@ -30,6 +33,5 @@ axiosInstance.interceptors.response.use(
         return Promise.reject(error);
     }
 );
-
 
 export default axiosInstance;

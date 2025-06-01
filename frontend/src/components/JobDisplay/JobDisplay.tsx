@@ -142,7 +142,7 @@ export function JobDisplay() {
                 title={tech}
                 style={{
                     marginRight: '0.5rem',
-                    color: getTechColor(key), // 🟢 виж функцията по-долу
+                    color: getTechColor(key),
                 }}
             />
         ) : (

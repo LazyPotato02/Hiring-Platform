@@ -1,4 +1,5 @@
 import axiosInstance from "../interceptors/auth.interceptor";
+import type {JobFormData} from "../components/AddJobPage/AddJobPage.tsx";
 
 const API_URL = "http://localhost:8000/job";
 
@@ -10,6 +11,10 @@ export async function getTechStacks() {
     return response.data;
 }
 
+export async function createJob(data: JobFormData) {
+    const response = await axiosInstance.post(`${API_URL}/`, data, {withCredentials: true});
+    return response.data;
+}
 
 // export async function getTechJobs(techName: string | undefined) {
 //     const response = await axiosInstance.get(`${API_URL}/get-techstack-jobs/${techName}`, {withCredentials: true});

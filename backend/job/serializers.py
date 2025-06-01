@@ -12,15 +12,17 @@ class TechStackSerializer(serializers.ModelSerializer):
 
 
 class JobSerializer(serializers.ModelSerializer):
-    company = serializers.PrimaryKeyRelatedField(queryset=Company.objects.all())
-    tech_stack = serializers.PrimaryKeyRelatedField(
+    tech_stack = TechStackSerializer(many=True, read_only=True)
+    tech_stack_ids = serializers.PrimaryKeyRelatedField(
         queryset=TechStack.objects.all(),
-        many=True
+        many=True,
+        write_only=True,
+        source='tech_stack'
     )
+
     class Meta:
         model = Job
         fields = '__all__'
-
 
 class TechCategorySerializer(serializers.ModelSerializer):
     tech_stacks = TechStackSerializer(many=True, read_only=True)

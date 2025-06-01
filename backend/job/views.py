@@ -102,6 +102,8 @@ class JobPagination(PageNumberPagination):
         })
 
 class TechStackJobListView(ListAPIView):
+    permission_classes = [AllowAny]
+
     serializer_class = JobSerializer
     pagination_class = JobPagination
     filter_backends = [OrderingFilter, SearchFilter]
@@ -115,6 +117,7 @@ class TechStackJobListView(ListAPIView):
 
 
 class GlobalJobListView(ListAPIView):
+    permission_classes = [AllowAny]
     serializer_class = JobSerializer
     pagination_class = JobPagination
     filter_backends = [OrderingFilter, SearchFilter]
