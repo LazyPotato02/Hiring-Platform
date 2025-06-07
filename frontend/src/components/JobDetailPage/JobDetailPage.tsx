@@ -1,21 +1,58 @@
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-
+import {getJobById} from "../../api/jobs.tsx";
+import type {Job} from "../../types/job.ts";
+import './JobDetailPage.css'
 function JobDetailPage() {
-    const jobId = useParams();
-
+    const {id} = useParams();
+    const [job, setJob] = useState<Job | null>(null)
 
 
     useEffect(() => {
-        console.log(jobId);
-    })
+        const loadJob = async () => {
+            try {
+                const res = await getJobById(id);
+                setJob(res);
+            } catch (e) {
+                console.error(`Error while loading job: ${e}`);
+            }
+        }
 
+        loadJob()
+
+    },[id])
+
+    if (!job) return <p style={{ padding: "1rem" }}>Loading...</p>;
+
+    const postedDate = new Date(job.posted_at).toLocaleDateString();
 
     return (
-        <div>
-            <h1>Detail</h1>
+        <div className="job-container">
+            <h1 className="job-title">{job.title}</h1>
+            <p className="job-date">📅 Posted on: {postedDate}</p>
+
+            <div>
+                <h3 className="job-section-title">Tech Stack:</h3>
+                <div className="tech-list">
+                    {job.tech_stack.map((tech) => (
+                        <span key={tech.id} className="tech-badge">{tech.name}</span>
+                    ))}
+                </div>
+            </div>
+
+            <div>
+                <h3 className="job-section-title">Job Description:</h3>
+                <p className="job-description">{job.description}</p>
+            </div>
+
+            <p className="job-status">
+                Status:{" "}
+                <strong style={{ color: job.is_active ? "green" : "red" }}>
+                    {job.is_active ? "Active" : "Inactive"}
+                </strong>
+            </p>
         </div>
-    )
+    );
 }
 
 export default JobDetailPage;

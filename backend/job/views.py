@@ -44,7 +44,19 @@ class JobViewSet(APIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class JobGetSingleJob(APIView):
+    serializer_class = JobSerializer
 
+    def get_object(self, id, active_required=True):
+        filters = {'pk': id}
+        if active_required:
+            filters['is_active'] = True
+        return get_object_or_404(Job, **filters)
+
+    def get(self, request, id):
+        job = self.get_object(id)
+        serializer = JobSerializer(job)
+        return Response(serializer.data)
 class JobDetailViewSet(APIView):
     serializer_class = JobSerializer
 

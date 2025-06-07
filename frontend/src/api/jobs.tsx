@@ -50,3 +50,11 @@ export async function fetchTechStackJobsPaginated(
     });
     return response.data;
 }
+
+
+export async function getJobById(id: string | undefined) {
+
+    const response = await axiosInstance.get(`${API_URL}/search/${id}`, {})
+
+    return response.data;
+}

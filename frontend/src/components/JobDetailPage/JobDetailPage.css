@@ -1,0 +1,50 @@
+/* JobDetailPage.css */
+
+.job-container {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 30px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    background-color: #fff;
+    font-family: "Segoe UI", sans-serif;
+}
+
+.job-title {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.job-date {
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.job-section-title {
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.tech-list {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.tech-badge {
+    background-color: #f0f0f0;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+}
+
+.job-description {
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.job-status {
+    font-weight: 500;
+}
