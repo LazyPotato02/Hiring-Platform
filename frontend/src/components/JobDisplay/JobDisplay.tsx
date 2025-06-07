@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
-import { fetchPaginatedJobs, fetchTechStackJobsPaginated } from "../../api/jobs";
+import {useEffect, useState} from "react";
+import {Link, useParams, useSearchParams} from "react-router-dom";
+import {fetchPaginatedJobs, fetchTechStackJobsPaginated} from "../../api/jobs";
 import Pagination from "../Pagination/Pagination";
 import './JobDisplay.css';
 import * as Icons from 'react-icons/si';
-import { FaJava } from 'react-icons/fa';
+import {FaJava} from 'react-icons/fa';
+
 type TechStack = {
     id: number;
     name: string;
@@ -97,7 +98,7 @@ const getTechColor = (tech: string): string => {
 
 
 export function JobDisplay() {
-    const { techName } = useParams();
+    const {techName} = useParams();
     const [searchParams] = useSearchParams();
     const search = searchParams.get("search") || "";
 
@@ -127,11 +128,11 @@ export function JobDisplay() {
         setCurrentPage(page);
     };
 
-    const TechIcon = ({ tech }: { tech: string }) => {
+    const TechIcon = ({tech}: { tech: string }) => {
         const key = tech.toLowerCase();
 
         if (key === 'java') {
-            return <FaJava title="Java" style={{ marginRight: '0.5rem', color: '#007396' }} />;
+            return <FaJava title="Java" style={{marginRight: '0.5rem', color: '#007396'}}/>;
         }
 
         const iconKey = techIconMap[key] as keyof typeof Icons;
@@ -161,15 +162,17 @@ export function JobDisplay() {
             ) : (
                 <ul className="job-list">
                     {jobs.map((job) => (
-                        <li className="job-card" key={job.id}>
-                            <h3 className="job-title">{job.title}</h3>
-                            <p className="job-description">{job.description}</p>
-                            <div className="job-icons">
-                                {job.tech_stack.map((tech) => (
-                                    <TechIcon key={tech.id} tech={tech.slug} />
-                                ))}
-                            </div>
-                        </li>
+                        <Link to={`/jobs/search/${job.id}`} key={job.id}>
+                            <li className="job-card" >
+                                <h3 className="job-title">{job.title}</h3>
+                                <p className="job-description">{job.description}</p>
+                                <div className="job-icons">
+                                    {job.tech_stack.map((tech) => (
+                                        <TechIcon key={tech.id} tech={tech.slug}/>
+                                    ))}
+                                </div>
+                            </li>
+                        </Link>
                     ))}
                 </ul>
             )}

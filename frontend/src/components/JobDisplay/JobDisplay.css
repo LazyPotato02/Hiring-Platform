@@ -20,7 +20,9 @@ h2{
     color: #ff0000;
     font-size: 1.55rem;
 }
-
+a{
+    text-decoration: none;
+}
 .job-list {
     list-style: none;
     padding: 0;

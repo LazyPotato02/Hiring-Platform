@@ -1,4 +1,3 @@
-// import axios from "axios";
 import axiosInstance from "../interceptors/auth.interceptor";
 import type {User} from "../auth/AuthContect.tsx";
 

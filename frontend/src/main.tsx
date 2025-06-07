@@ -11,6 +11,7 @@ import {LoggedGuard} from "./guards/LoggedGuard.tsx";
 import {JobDisplay} from "./components/JobDisplay/JobDisplay.tsx";
 import {AddJobPage} from "./components/AddJobPage/AddJobPage.tsx";
 import {RequireRole} from "./guards/roleGuard.tsx";
+import JobDetailPage from "./components/JobDetailPage/JobDetailPage.tsx";
 
 
 createRoot(document.getElementById('root')!).render(
@@ -23,6 +24,7 @@ createRoot(document.getElementById('root')!).render(
                     <Route path={''} element={<HomePage/>}/>
                     <Route path="/jobs" element={<JobDisplay />} />
                     <Route  path="/jobs/:techName" element={<JobDisplay/>}/>
+                    <Route path="/jobs/search/:id" element={<JobDetailPage />} />
                     <Route path="/jobs/add" element={<RequireRole><AddJobPage /></RequireRole>} />
 
                     <Route path="login" element={<LoggedGuard><LoginPage/></LoggedGuard>}/>
