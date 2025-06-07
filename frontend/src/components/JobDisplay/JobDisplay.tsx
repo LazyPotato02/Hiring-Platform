@@ -165,7 +165,7 @@ export function JobDisplay() {
                         <Link to={`/jobs/search/${job.id}`} key={job.id}>
                             <li className="job-card" >
                                 <h3 className="job-title">{job.title}</h3>
-                                <p className="job-description">{job.description}</p>
+                                <p className="job-display-description">{job.description}</p>
                                 <div className="job-icons">
                                     {job.tech_stack.map((tech) => (
                                         <TechIcon key={tech.id} tech={tech.slug}/>
