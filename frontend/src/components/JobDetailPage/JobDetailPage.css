@@ -52,3 +52,21 @@
 .job-status {
     font-weight: 500;
 }
+
+.job-title-wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.job-title-wrapper button {
+    background-color: #39a827;
+    border: none;
+    color: #fff;
+    padding: 8px;
+    border-radius: 6px;
+}
+.job-title-wrapper button:hover{
+    background-color: #359126;
+
+}
