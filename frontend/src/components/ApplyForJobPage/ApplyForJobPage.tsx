@@ -1,14 +1,19 @@
 import {useState} from 'react';
 import './ApplyForJobPage.css'
+import {applyForJob} from "../../api/jobApplications.tsx";
 
-function ApplyForJobPage({ onClose }: { onClose: () => void }) {
+interface ApplyForJobPageProps {
+    jobId: number;
+    onClose: () => void;
+}
+
+function ApplyForJobPage({jobId, onClose}: ApplyForJobPageProps) {
     const [cv, setCv] = useState<File | null>(null);
     const [message, setMessage] = useState('');
     const [linkedin, setLinkedin] = useState('');
     const [github, setGithub] = useState('');
     const [phone, setPhone] = useState('');
     const [agree, setAgree] = useState(false);
-
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -23,29 +28,29 @@ function ApplyForJobPage({ onClose }: { onClose: () => void }) {
         }
 
         const formData = new FormData();
+        formData.append('job', jobId.toString());
         formData.append('cv', cv);
         formData.append('message', message);
         formData.append('linkedin', linkedin);
         formData.append('github', github);
         formData.append('phone', phone);
-
-        fetch('/api/apply', {
-            method: 'POST',
-            body: formData
-        })
-            .then(res => res.json())
-            .then(data => {
+        applyForJob(formData)
+            .then((data) => {
                 console.log("Successful:", data);
+                alert("You have successfully applied!");
+                onClose();
             })
-            .catch(err => {
-                console.error("Error:", err);
+            .catch((err) => {
+                console.error("Application error", err);
+                alert("An error occurred while applying.");
+
             });
     };
 
     return (
         <div className="popup">
             <h1 className='job-title'>Job Application Form</h1>
-            <button onClick={onClose} style={{ position: 'absolute', top: '10px', right: '10px' }}>✖</button>
+            <button onClick={onClose} style={{position: 'absolute', top: '10px', right: '10px'}}>✖</button>
 
             <form onSubmit={handleSubmit} encType="multipart/form-data">
                 <div>

@@ -63,7 +63,7 @@ function JobDetailPage() {
             </p>
             {isOpenApplyForm && (
                 <div className="popup-backdrop">
-                    <ApplyForJobPage onClose={() => setIsOpenApplyForm(false)} />
+                    <ApplyForJobPage jobId={job.id} onClose={() => setIsOpenApplyForm(false)} />
                 </div>
             )}
         </div>
