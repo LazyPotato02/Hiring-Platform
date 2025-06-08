@@ -54,3 +54,14 @@
 .job-title{
     text-align: center;
 }
+
+.error-text {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 4px;
+}
+
+.popup form input,
+.popup form textarea {
+    padding: 0.5rem;
+}

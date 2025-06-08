@@ -14,3 +14,10 @@ export async function applyForJob(formData: FormData) {
 
     return response.data;
 }
+
+
+
+export async function getApplicationStatus(jobId: number) {
+    const res = await axiosInstance.get(`${API_URL}/apply/status/${jobId}/`);
+    return res.data.applied;
+}

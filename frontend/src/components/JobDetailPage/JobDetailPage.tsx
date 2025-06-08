@@ -3,18 +3,21 @@ import {useParams} from "react-router-dom";
 import {getJobById} from "../../api/jobs.tsx";
 import type {Job} from "../../types/job.ts";
 import './JobDetailPage.css'
-import ApplyForJobPage from "../ApplyForJobPage/ApplyForJobPage.tsx";
+import ApplyForJobPopUp from "../ApplyForJobPage/ApplyForJobPopUp.tsx";
+import {getApplicationStatus} from "../../api/jobApplications.tsx";
 
 function JobDetailPage() {
     const {id} = useParams();
     const [job, setJob] = useState<Job | null>(null)
     const [isOpenApplyForm, setIsOpenApplyForm] = useState<boolean>(false)
-
+    const [alreadyApplied, setAlreadyApplied] = useState<boolean>(false);
     useEffect(() => {
         const loadJob = async () => {
             try {
                 const res = await getJobById(id);
                 setJob(res);
+                const applied = await getApplicationStatus(res.id);
+                setAlreadyApplied(applied);
             } catch (e) {
                 console.error(`Error while loading job: ${e}`);
             }
@@ -36,7 +39,13 @@ function JobDetailPage() {
         <div className="job-container">
             <div className="job-title-wrapper">
                 <h1 className="job-title">{job.title}</h1>
-                <button onClick={openApplyForm}>Apply For Job</button>
+                {!alreadyApplied && (
+                    <button onClick={openApplyForm}>Apply For Job</button>
+                )}
+
+                {alreadyApplied && (
+                    <p style={{ color: 'green', fontWeight: 'bold' }}>✅ You have already applied for this job.</p>
+                )}
             </div>
 
             <p className="job-date">📅 Posted on: {postedDate}</p>
@@ -63,7 +72,10 @@ function JobDetailPage() {
             </p>
             {isOpenApplyForm && (
                 <div className="popup-backdrop">
-                    <ApplyForJobPage jobId={job.id} onClose={() => setIsOpenApplyForm(false)} />
+                    <ApplyForJobPopUp jobId={job.id} onClose={() => setIsOpenApplyForm(false)} onSuccess={() => {
+                        setAlreadyApplied(true);
+                        setIsOpenApplyForm(false);
+                    }} />
                 </div>
             )}
         </div>
