@@ -1,14 +1,27 @@
 import axiosInstance from "../interceptors/auth.interceptor";
-import type {User} from "../auth/AuthContect.tsx";
+import type {AxiosError} from "axios";
 
 const API_URL = "http://localhost:8000/users";
 
-export async function getCurrentUser(): Promise<User> {
-    const response = await axiosInstance.get(`${API_URL}/me/`, {
-        withCredentials: true,
-    });
-    return response.data;
-}
+export const getCurrentUser = async () => {
+    try {
+        const response = await axiosInstance.get("/users/me/");
+        return response.data;
+    } catch (err) {
+        const error = err as AxiosError;
+
+        if (!error.response) {
+            console.error("Unknown error:", error);
+            return null;
+        }
+
+        if (error.response.status === 401) {
+            return null;
+        }
+
+        throw error;
+    }
+};
 
 
 export async function loginApi(email: string, password: string) {

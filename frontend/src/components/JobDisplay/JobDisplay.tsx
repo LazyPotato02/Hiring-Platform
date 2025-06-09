@@ -162,26 +162,29 @@ export function JobDisplay() {
             ) : (
                 <ul className="job-list">
                     {jobs.map((job) => (
-                        <Link to={`/jobs/search/${job.id}`} key={job.id}>
-                            <li className="job-card" >
-                                <h3 className="job-title">{job.title}</h3>
-                                <p className="job-display-description">{job.description}</p>
-                                <div className="job-icons">
-                                    {job.tech_stack.map((tech) => (
-                                        <TechIcon key={tech.id} tech={tech.slug}/>
-                                    ))}
-                                </div>
-                            </li>
-                        </Link>
-                    ))}
-                </ul>
-            )}
 
-            <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={handlePageChange}
-            />
-        </div>
-    );
+                        <Link to={`/jobs/search/${job.id}`} key={job.id}>
+                    <li className="job-card">
+                        <h3 className="job-title">{job.title}</h3>
+                        <p className="job-display-description">{job.description}</p>
+                        <div className="job-icons">
+                            {job.tech_stack.map((tech) => (
+                                <TechIcon key={tech.id} tech={tech.slug}/>
+                            ))}
+                        </div>
+                    </li>
+                </Link>
+            ))}
+        </ul>
+    )
+}
+
+    <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+    />
+</div>
+)
+    ;
 }

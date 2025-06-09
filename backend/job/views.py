@@ -46,7 +46,7 @@ class JobViewSet(APIView):
 
 class JobGetSingleJob(APIView):
     serializer_class = JobSerializer
-
+    permission_classes = [AllowAny]
     def get_object(self, id, active_required=True):
         filters = {'pk': id}
         if active_required:
@@ -92,15 +92,6 @@ class TechCategoryListView(APIView):
         categories = TechCategory.objects.prefetch_related('tech_stacks').all()
         serializer = TechCategorySerializer(categories, many=True)
         return Response(serializer.data)
-
-
-# class GetJobsByTechStack(APIView):
-#     permission_classes = [AllowAny]
-#
-#     def get(self, request, tech_stack):
-#         jobs = Job.objects.filter(tech_stack__slug=tech_stack, is_active=True).distinct()
-#         serializer = JobSerializer(jobs, many=True)
-#         return Response(serializer.data)
 
 
 class JobPagination(PageNumberPagination):

@@ -5,9 +5,11 @@ import type {Job} from "../../types/job.ts";
 import './JobDetailPage.css'
 import ApplyForJobPopUp from "../ApplyForJobPage/ApplyForJobPopUp.tsx";
 import {getApplicationStatus} from "../../api/jobApplications.tsx";
+import {useAuth} from "../../auth/AuthContect.tsx";
 
 function JobDetailPage() {
     const {id} = useParams();
+    const {user} = useAuth()
     const [job, setJob] = useState<Job | null>(null)
     const [isOpenApplyForm, setIsOpenApplyForm] = useState<boolean>(false)
     const [alreadyApplied, setAlreadyApplied] = useState<boolean>(false);
@@ -39,7 +41,7 @@ function JobDetailPage() {
         <div className="job-container">
             <div className="job-title-wrapper">
                 <h1 className="job-title">{job.title}</h1>
-                {!alreadyApplied && (
+                {user && !alreadyApplied && user.id !== job.created_by && (
                     <button onClick={openApplyForm}>Apply For Job</button>
                 )}
 

@@ -14,8 +14,32 @@ axiosInstance.interceptors.response.use(
         const isRetryable = !originalRequest._retry;
         const isNotRefreshEndpoint = !originalRequest.url.includes('/users/refresh-token/');
 
-        const isPublicEndpoint =
-            originalRequest.url.includes('/job/jobs');
+        // Правим абсолютен URL, за да извадим .pathname
+        const rawUrl = originalRequest.url.startsWith('http')
+            ? originalRequest.url
+            : `${originalRequest.baseURL || axiosInstance.defaults.baseURL}${originalRequest.url}`;
+        const url = new URL(rawUrl).pathname;
+
+        const publicEndpointPrefixes = [
+            '/job/jobs',
+            '/job/search',
+            '/job/applications/status',
+            '/users/me/',
+        ];
+
+        const isPublicEndpoint = publicEndpointPrefixes.some(prefix =>
+            url.startsWith(prefix)
+        );
+
+        const publicFrontendPaths = [
+            '/',
+            '/job/jobs',
+            '/job/search',
+            '/jobs',
+        ];
+        const isOnPublicFrontend = publicFrontendPaths.some(path =>
+            window.location.pathname.startsWith(path)
+        );
 
         if (isAuthError && isRetryable && isNotRefreshEndpoint && !isPublicEndpoint) {
             originalRequest._retry = true;
@@ -23,7 +47,7 @@ axiosInstance.interceptors.response.use(
                 await axiosInstance.post('/users/refresh-token/', {}, { withCredentials: true });
                 return axiosInstance(originalRequest);
             } catch (refreshError) {
-                if (window.location.pathname !== '/login') {
+                if (!isOnPublicFrontend && window.location.pathname !== '/login') {
                     window.location.href = '/login';
                 }
                 return Promise.reject(refreshError);
