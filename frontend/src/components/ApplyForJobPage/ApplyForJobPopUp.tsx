@@ -17,8 +17,10 @@ function ApplyForJobPopUp({ jobId, onClose, onSuccess }: ApplyForJobPageProps) {
     const [agree, setAgree] = useState(false);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const [submitting, setSubmitting] = useState(false);
+    const isFormValid = agree && cv && message && linkedin && github && phone && Object.keys(errors).length === 0;
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
 
         const newErrors: { [key: string]: string } = {};
 
@@ -63,6 +65,7 @@ function ApplyForJobPopUp({ jobId, onClose, onSuccess }: ApplyForJobPageProps) {
         }
 
         setErrors(newErrors);
+
         if (Object.keys(newErrors).length > 0) return;
 
         const formData = new FormData();
@@ -83,7 +86,7 @@ function ApplyForJobPopUp({ jobId, onClose, onSuccess }: ApplyForJobPageProps) {
             })
             .catch((err) => {
                 console.error("Application error", err);
-                alert("An error occurred while applying.");
+                setErrors(prev => ({ ...prev, form: "Something went wrong. Please try again later." }));
             })
             .finally(() => setSubmitting(false));
 
@@ -101,7 +104,7 @@ function ApplyForJobPopUp({ jobId, onClose, onSuccess }: ApplyForJobPageProps) {
         <div className="popup">
             <h1 className="job-title">Job Application Form</h1>
             <button onClick={onClose} className="close-btn">✖</button>
-
+            {errors.form && <p className="error-text">{errors.form}</p>}
             <form onSubmit={handleSubmit} encType="multipart/form-data">
                 <div>
                     <label>Upload CV (PDF/DOCX):</label>
@@ -190,7 +193,7 @@ function ApplyForJobPopUp({ jobId, onClose, onSuccess }: ApplyForJobPageProps) {
                     {errors.agree && <p className="error-text">{errors.agree}</p>}
                 </div>
 
-                <button type="submit" disabled={submitting}>
+                <button type="submit" disabled={submitting || !isFormValid}>
                     {submitting ? "Submitting..." : "Submit an application"}
                 </button>
             </form>
