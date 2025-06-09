@@ -100,7 +100,7 @@ function ApplyForJobPopUp({ jobId, onClose, onSuccess }: ApplyForJobPageProps) {
     return (
         <div className="popup">
             <h1 className="job-title">Job Application Form</h1>
-            <button onClick={onClose} style={{ position: 'absolute', top: '10px', right: '10px' }}>✖</button>
+            <button onClick={onClose} className="close-btn">✖</button>
 
             <form onSubmit={handleSubmit} encType="multipart/form-data">
                 <div>
