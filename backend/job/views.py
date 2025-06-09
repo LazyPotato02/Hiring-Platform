@@ -36,7 +36,7 @@ class JobViewSet(APIView):
 
         serializer = JobSerializer(data=request.data)
         if serializer.is_valid():
-            job = serializer.save()
+            job = serializer.save(created_by=request.user)
             if tech_stack_data:
                 tech_stack_objs = TechStack.objects.filter(id__in=tech_stack_data)
                 job.tech_stack.set(tech_stack_objs)

@@ -10,7 +10,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.utils.timezone import now
 from users.models import CustomUser
-from users.serializers import RegisterUserSerializer
+from users.serializers import RegisterUserSerializer, MyTokenObtainPairSerializer
 
 
 # Create your views here.
@@ -72,13 +72,12 @@ class LoginView(APIView):
     permission_classes = (AllowAny,)
 
     def post(self, request):
-        serializer = TokenObtainPairSerializer(data=request.data)
+        serializer = MyTokenObtainPairSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         refresh = serializer.validated_data["refresh"]
         access = serializer.validated_data["access"]
 
-        # Получаваме потребителя (от Token serializer-а)
         user = CustomUser.objects.get(email=request.data["email"])
 
         access_exp = now() + timedelta(minutes=15)
