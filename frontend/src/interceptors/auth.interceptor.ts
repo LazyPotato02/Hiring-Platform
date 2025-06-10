@@ -24,7 +24,6 @@ axiosInstance.interceptors.response.use(
             '/job/jobs',
             '/job/search',
             '/job/applications/status',
-            '/users/me/',
         ];
 
         const isPublicEndpoint = publicEndpointPrefixes.some(prefix =>

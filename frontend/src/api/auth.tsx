@@ -50,3 +50,20 @@ export async function logoutApi() {
     const response = await axiosInstance.post(`${API_URL}/logout/`, {},{withCredentials: true});
     return response.data;
 }
+
+export async function updateUserProfile(data: {
+    first_name: string;
+    last_name: string;
+    email: string;
+}) {
+    const res = await axiosInstance.put(`${API_URL}/update-profile/`, data, { withCredentials: true });
+    return res.data;
+}
+
+export async function changeUserPassword(data: {
+    current_password: string;
+    new_password: string;
+}) {
+    const res = await axiosInstance.post(`${API_URL}/change-password/`, data, { withCredentials: true });
+    return res.data;
+}

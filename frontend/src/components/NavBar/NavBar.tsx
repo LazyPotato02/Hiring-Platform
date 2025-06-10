@@ -73,7 +73,12 @@ const NavBar: React.FC = () => {
                 <li>
                     <div className="navbar-item navbar-item-users">
                         {loading ? null : user ? (
-                            <Link className="navbar-item" to="/" onClick={logout}>Logout</Link>
+                            <>
+                                <Link className="navbar-item" to="/profile">Profile</Link>
+
+                                <Link className="navbar-item" to="/" onClick={logout}>Logout</Link>
+                            </>
+
                         ) : (
                             <>
                                 <Link className="navbar-item" to="/login">Login</Link>
