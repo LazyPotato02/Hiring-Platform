@@ -16,7 +16,12 @@ export async function createJob(data: JobFormData) {
     const response = await axiosInstance.post(`${API_URL}/`, data, {withCredentials: true});
     return response.data;
 }
-export async function updateJob(id: number, updatedJob: Job): Promise<Job> {
+export async function updateJob(id: number, updatedJob: {
+    title: string;
+    description: string;
+    is_active: boolean;
+    tech_stack_ids: number[]
+}): Promise<Job> {
     const res = await axiosInstance.put(`${API_URL}/detail/${id}/`, updatedJob, {
         withCredentials: true,
     });

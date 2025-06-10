@@ -20,26 +20,21 @@ function EditJobPopUp({ job, onClose, onSave }: EditJobPopUpProps) {
     const handleSave = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const updatedJob: Job = {
-            ...job,
+        const updatedJobPayload = {
             title,
             description,
             is_active: isActive,
-            tech_stack: techStackIds.map((id) => {
-                const tech = TECH_STACKS.find((t) => t.id === id);
-                return tech
-                    ? { id: tech.id, name: tech.name, slug: tech.slug }
-                    : { id, name: "Unknown", slug: "unknown" };
-            }),
+            tech_stack_ids: techStackIds,
         };
 
         try {
-            const updated = await updateJob(job.id, updatedJob);
+            const updated = await updateJob(job.id, updatedJobPayload);
             onSave(updated);
         } catch (err) {
             console.error("Failed to update job", err);
         }
     };
+
 
     return (
         <div className="popup">
