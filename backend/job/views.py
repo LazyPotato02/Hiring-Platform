@@ -71,7 +71,7 @@ class JobGetSingleJob(APIView):
 
 class JobDetailViewSet(APIView):
     serializer_class = JobSerializer
-    permission_classes = [IsAuthenticated]  # само логнати потребители
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, id):
         job = get_job_or_404(id, request.user)
