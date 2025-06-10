@@ -1,0 +1,55 @@
+.my-jobs-container {
+    padding: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.my-jobs-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    color: #222;
+    text-align: center;
+}
+
+.my-jobs-empty {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #666;
+}
+
+.my-jobs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.my-job-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s;
+}
+
+.my-job-card:hover {
+    transform: scale(1.02);
+    cursor: pointer;
+}
+
+.my-job-card h3 {
+    margin: 0 0 0.5rem;
+    color: #333;
+}
+
+.my-job-card p {
+    margin: 0.25rem 0 1rem;
+    color: #555;
+}
+
+.my-job-techs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+}

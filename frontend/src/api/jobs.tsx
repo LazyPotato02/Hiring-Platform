@@ -66,3 +66,15 @@ export async function getJobById(id: string | undefined) {
 
     return response.data;
 }
+
+export async function fetchUserJobs(userId: number) {
+    const res = await fetch(`${API_URL}/my-jobs/${userId}/`, {
+        credentials: 'include',
+    });
+
+    if (!res.ok) {
+        throw new Error("Failed to fetch user's jobs");
+    }
+
+    return await res.json();
+}

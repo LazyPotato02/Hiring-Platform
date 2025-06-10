@@ -5,6 +5,7 @@ import Pagination from "../Pagination/Pagination";
 import './JobDisplay.css';
 import * as Icons from 'react-icons/si';
 import {FaJava} from 'react-icons/fa';
+import {getTechColor, techIconMap} from "../../assets/icons-style.tsx";
 
 type TechStack = {
     id: number;
@@ -17,83 +18,6 @@ type Job = {
     title: string;
     description: string;
     tech_stack: TechStack[];
-};
-
-const techIconMap: Record<string, keyof typeof Icons> = {
-    net: 'SiDotnet',
-    php: 'SiPhp',
-    ccembedded: 'SiCplusplus',
-    python: 'SiPython',
-    ruby: 'SiRuby',
-    go: 'SiGo',
-    nodejs: 'SiNodedotjs',
-    'node-dot-js': 'SiNodedotjs',
-    javascript: 'SiJavascript',
-    react: 'SiReact',
-    angular: 'SiAngular',
-    vuejs: 'SiVuedotjs',
-    devops: 'SiJenkins',
-    'database-engineer': 'SiMysql',
-    cybersecurity: 'SiHackthebox',
-    sysadmin: 'SiGnubash',
-    'automation-qa': 'SiCypress',
-    'manual-qa': 'SiTestinglibrary',
-    'etldata-warehouse': 'SiApacheairflow',
-    'big-data': 'SiApachehadoop',
-    'bidata-visualization': 'SiTableau',
-    'mlaidata-modelling': 'SiTensorflow',
-    sap: 'SiSap',
-    salesforce: 'SiSalesforce',
-    ios: 'SiAppstore',
-    android: 'SiAndroid',
-    'it-business-analyst': 'SiMicrostrategy',
-    'product-management': 'SiProducthunt',
-    'product-owner': 'SiProducthunt',
-    'tech-writer': 'SiReadthedocs',
-    'hardware-and-engineering': 'SiRaspberrypi',
-    'customer-support': 'SiZendesk',
-    'technical-support': 'SiSlack',
-    'ui-ux': 'SiFigma',
-};
-const getTechColor = (tech: string): string => {
-    const colors: Record<string, string> = {
-        java: '#007396',
-        net: '#512BD4',
-        php: '#777BB4',
-        ccembedded: '#00599C',
-        python: '#3776AB',
-        ruby: '#CC342D',
-        go: '#00ADD8',
-        nodejs: '#339933',
-        javascript: '#F7DF1E',
-        react: '#61DAFB',
-        angular: '#DD0031',
-        vuejs: '#42B883',
-        devops: '#F25022',
-        'database-engineer': '#336791',
-        cybersecurity: '#00FFEF',
-        sysadmin: '#4EAA25',
-        'automation-qa': '#58C0DB',
-        'manual-qa': '#E34F26',
-        'etldata-warehouse': '#0178D4',
-        'big-data': '#66CCFF',
-        'bidata-visualization': '#E97627',
-        'mlaidata-modelling': '#FF6F00',
-        sap: '#0FAAFF',
-        salesforce: '#00A1E0',
-        ios: '#000000',
-        android: '#3DDC84',
-        'it-business-analyst': '#FF9900',
-        'product-management': '#DA552F',
-        'product-owner': '#DA552F',
-        'tech-writer': '#8B8B8B',
-        'hardware-and-engineering': '#B22222',
-        'customer-support': '#F46A25',
-        'technical-support': '#611f69',
-        'ui-ux': '#F24E1E',
-    };
-
-    return colors[tech.toLowerCase()] || '#999';
 };
 
 

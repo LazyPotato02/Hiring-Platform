@@ -13,6 +13,7 @@ import {AddJobPage} from "./components/AddJobPage/AddJobPage.tsx";
 import {RequireRole} from "./guards/roleGuard.tsx";
 import JobDetailPage from "./components/JobDetailPage/JobDetailPage.tsx";
 import ProfilePage from "./components/ProfilePage/ProfilePage.tsx";
+import PostedJobsPage from "./UserPostedJobsPage/PostedJobsPage.tsx";
 
 
 createRoot(document.getElementById('root')!).render(
@@ -28,6 +29,7 @@ createRoot(document.getElementById('root')!).render(
                     <Route path="/jobs/search/:id" element={<JobDetailPage/>}/>
                     <Route path="/jobs/add" element={<RequireRole><AddJobPage/></RequireRole>}/>
                     <Route path="/profile" element={<ProfilePage/>}></Route>
+                    <Route path="/user/posted-jobs" element={<PostedJobsPage/>}></Route>
                     <Route path="login" element={<LoggedGuard><LoginPage/></LoggedGuard>}/>
                     <Route path="register" element={<LoggedGuard><RegisterPage/></LoggedGuard>}/>
                 </Routes>
