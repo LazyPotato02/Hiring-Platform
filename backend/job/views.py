@@ -21,6 +21,9 @@ class JobViewSet(APIView):
 
         jobs = Job.objects.filter(is_active=True)
 
+
+
+
         if tech_stack_ids:
             ids = [int(id.strip()) for id in tech_stack_ids.split(',') if id.strip().isdigit()]
             jobs = jobs.filter(tech_stack__id__in=ids)
@@ -115,7 +118,7 @@ class TechStackJobListView(ListAPIView):
 
     def get_queryset(self):
         tech_stack = self.kwargs.get('tech_stack')
-        return Job.objects.filter(tech_stack__slug=tech_stack)
+        return Job.objects.filter(tech_stack__slug=tech_stack,is_active=True)
 
 
 class GlobalJobListView(ListAPIView):

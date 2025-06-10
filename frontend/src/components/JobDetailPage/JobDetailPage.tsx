@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {getJobById} from "../../api/jobs.tsx";
 import type {Job} from "../../types/job.ts";
 import './JobDetailPage.css'
@@ -7,6 +7,7 @@ import ApplyForJobPopUp from "../ApplyForJobPage/ApplyForJobPopUp.tsx";
 import {getApplicationStatus} from "../../api/jobApplications.tsx";
 import {useAuth} from "../../auth/AuthContect.tsx";
 import EditJobPopUp from "../EditJobPopUp/EditJobPopUp.tsx";
+import axios from "axios";
 
 function JobDetailPage() {
     const {id} = useParams();
@@ -15,7 +16,7 @@ function JobDetailPage() {
     const [isOpenApplyForm, setIsOpenApplyForm] = useState<boolean>(false)
     const [alreadyApplied, setAlreadyApplied] = useState<boolean>(false);
     const [isOpenEditForm, setIsOpenEditForm] = useState<boolean>(false);
-
+    const navigate = useNavigate()
     useEffect(() => {
         const loadJob = async () => {
             try {
@@ -23,8 +24,16 @@ function JobDetailPage() {
                 setJob(res);
                 const applied = await getApplicationStatus(res.id);
                 setAlreadyApplied(applied);
-            } catch (e) {
-                console.error(`Error while loading job: ${e}`);
+            } catch (error) {
+                if (axios.isAxiosError(error)) {
+                    if (error.response?.status === 404) {
+                        navigate("/");
+                    } else {
+                        console.error("API error:", error.message);
+                    }
+                } else {
+                    console.error("Unexpected error:", error);
+                }
             }
         }
 
