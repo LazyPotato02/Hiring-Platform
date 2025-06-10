@@ -1,5 +1,6 @@
 import axiosInstance from "../interceptors/auth.interceptor";
 import type {JobFormData} from "../components/AddJobPage/AddJobPage.tsx";
+import type {Job} from "../types/job.ts";
 
 const API_URL = "http://localhost:8000/job";
 
@@ -15,7 +16,12 @@ export async function createJob(data: JobFormData) {
     const response = await axiosInstance.post(`${API_URL}/`, data, {withCredentials: true});
     return response.data;
 }
-
+export async function updateJob(id: number, updatedJob: Job): Promise<Job> {
+    const res = await axiosInstance.put(`${API_URL}/detail/${id}/`, updatedJob, {
+        withCredentials: true,
+    });
+    return res.data;
+}
 
 
 export async function fetchPaginatedJobs(page: number = 1, limit: number = 5, search: string = "") {

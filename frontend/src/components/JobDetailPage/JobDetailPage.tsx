@@ -6,6 +6,7 @@ import './JobDetailPage.css'
 import ApplyForJobPopUp from "../ApplyForJobPage/ApplyForJobPopUp.tsx";
 import {getApplicationStatus} from "../../api/jobApplications.tsx";
 import {useAuth} from "../../auth/AuthContect.tsx";
+import EditJobPopUp from "../EditJobPopUp/EditJobPopUp.tsx";
 
 function JobDetailPage() {
     const {id} = useParams();
@@ -13,6 +14,8 @@ function JobDetailPage() {
     const [job, setJob] = useState<Job | null>(null)
     const [isOpenApplyForm, setIsOpenApplyForm] = useState<boolean>(false)
     const [alreadyApplied, setAlreadyApplied] = useState<boolean>(false);
+    const [isOpenEditForm, setIsOpenEditForm] = useState<boolean>(false);
+
     useEffect(() => {
         const loadJob = async () => {
             try {
@@ -36,7 +39,14 @@ function JobDetailPage() {
     const openApplyForm = () => {
         setIsOpenApplyForm(true);
     }
+    const openEditForm = () => {
+        setIsOpenEditForm(true);
+    }
 
+    const handleJobUpdate = (updatedJob: Job) => {
+        setJob(updatedJob);
+        setIsOpenEditForm(false);
+    };
     return (
         <div className="job-container">
             <div className="job-title-wrapper">
@@ -44,7 +54,9 @@ function JobDetailPage() {
                 {user && !alreadyApplied && user.id !== job.created_by && (
                     <button onClick={openApplyForm}>Apply For Job</button>
                 )}
-
+                {user && user.id == job.created_by && (
+                    <button onClick={openEditForm}> Edit</button>
+                )}
                 {alreadyApplied && (
                     <p style={{ color: 'green', fontWeight: 'bold' }}>✅ You have already applied for this job.</p>
                 )}
@@ -78,6 +90,15 @@ function JobDetailPage() {
                         setAlreadyApplied(true);
                         setIsOpenApplyForm(false);
                     }} />
+                </div>
+            )}
+            {isOpenEditForm && (
+                <div className="popup-backdrop">
+                    <EditJobPopUp
+                        job={job}
+                        onClose={() => setIsOpenEditForm(false)}
+                        onSave={handleJobUpdate}
+                    />
                 </div>
             )}
         </div>

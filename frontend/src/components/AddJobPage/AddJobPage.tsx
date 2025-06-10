@@ -2,6 +2,7 @@ import {useState} from "react";
 import './AddJobPage.css'
 import {createJob} from "../../api/jobs.tsx";
 import {useNavigate} from "react-router-dom";
+import {TECH_STACKS} from "../../assets/techStack.ts";
 export type JobFormData = {
     title: string;
     description: string;
@@ -14,45 +15,6 @@ export type JobFormData = {
 export function AddJobPage() {
     const navigate = useNavigate();
 
-
-    const TECH_STACKS = [
-        {id: 1, name: "Java"},
-        {id: 2, name: ".NET"},
-        {id: 3, name: "PHP"},
-        {id: 4, name: "C/C++/Embedded"},
-        {id: 5, name: "Python"},
-        {id: 6, name: "Ruby"},
-        {id: 7, name: "Go"},
-        {id: 8, name: "Node.js"},
-        {id: 9, name: "JavaScript"},
-        {id: 10, name: "React"},
-        {id: 11, name: "Angular"},
-        {id: 12, name: "Vue.js"},
-        {id: 13, name: "DevOps"},
-        {id: 14, name: "Database Engineer"},
-        {id: 15, name: "Cybersecurity"},
-        {id: 16, name: "SysAdmin"},
-        {id: 17, name: "Automation QA"},
-        {id: 18, name: "Manual QA"},
-        {id: 19, name: "ETL/Data warehouse"},
-        {id: 20, name: "Big Data"},
-        {id: 21, name: "BI/Data visualization"},
-        {id: 22, name: "ML/AI/Data modelling"},
-        {id: 23, name: "SAP"},
-        {id: 24, name: "SalesForce"},
-        {id: 25, name: "iOS"},
-        {id: 26, name: "Android"},
-        {id: 27, name: "IT Project Management"},
-        {id: 28, name: "IT Business Analyst"},
-        {id: 29, name: "Product Management"},
-        {id: 30, name: "Product Owner"},
-        {id: 31, name: "Tech Writer"},
-        {id: 32, name: "FullStack Developer"},
-        {id: 33, name: "Hardware and Engineering"},
-        {id: 34, name: "Customer Support"},
-        {id: 35, name: "Technical Support"},
-        {id: 36, name: "UI/UX"},
-    ];
 
     const [form, setForm] = useState<JobFormData>({
         title: "",

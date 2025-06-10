@@ -59,7 +59,6 @@ class JobGetSingleJob(APIView):
         return Response(serializer.data)
 class JobDetailViewSet(APIView):
     serializer_class = JobSerializer
-
     def get_object(self, id, active_required=True):
         filters = {'pk': id}
         if active_required:
