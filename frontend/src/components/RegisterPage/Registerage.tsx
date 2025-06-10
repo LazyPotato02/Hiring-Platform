@@ -33,7 +33,7 @@ const RegisterPage: React.FC = () => {
         if (value.trim().length < 2 || value.trim().length > 30) {
             return "First name must be between 2 and 30 characters.";
         }
-        if (!/^[a-zA-Zа-яА-Я\s\-]+$/.test(value)) {
+        if (!/^[a-zA-Zа-яА-Я\s-]+$/.test(value)) {
             return "First name can only contain letters, spaces, and hyphens.";
         }
         return "";
@@ -43,11 +43,11 @@ const RegisterPage: React.FC = () => {
         if (value.trim().length < 2 || value.trim().length > 30) {
             return "Last name must be between 2 and 30 characters.";
         }
-        if (!/^[a-zA-Zа-яА-Я\s\-]+$/.test(value)) {
+        if (!/^[a-zA-Zа-яА-Я\s-]+$/.test(value)) {
             return "Last name can only contain letters, spaces, and hyphens.";
         }
         return "";
-    };
+    }
 
     const validatePassword = (value: string) => {
         if (value.length < 8) {
