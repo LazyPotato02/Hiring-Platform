@@ -1,7 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
 
-from company.models import Company
 
 from users.models import CustomUser
 

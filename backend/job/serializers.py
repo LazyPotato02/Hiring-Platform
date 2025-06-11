@@ -1,7 +1,6 @@
 from rest_framework import serializers
 
-from company.models import Company
-from company.serializers import CompanyJobSerializer
+
 from job.models import Job, TechStack, TechCategory
 
 

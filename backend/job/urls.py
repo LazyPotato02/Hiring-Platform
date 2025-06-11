@@ -10,7 +10,6 @@ urlpatterns = [
 
     path('tech-categories/', TechCategoryListView.as_view(), name='tech-categories'),
 
-    # path('get-techstack-jobs/<str:tech_stack>/', GetJobsByTechStack.as_view(), name='get-jobs-by-tech-stack'),
     path('jobs/tech/<str:tech_stack>/', TechStackJobListView.as_view(), name='techstack-jobs'),
     path('my-jobs/<int:user_id>/', MyJobsView.as_view(), name='my-jobs'),
     path('jobs/', GlobalJobListView.as_view(), name='all-jobs'),
