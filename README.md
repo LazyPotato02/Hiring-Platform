@@ -1,4 +1,4 @@
-# 📄 Project Documentation: Remote Job Board Platform
+# 📄 Remote Job Board Platform
 
 ## 🧩 Overview
 This project is a **Remote Job Board Platform** designed to connect companies with candidates for remote work opportunities. It provides functionalities for job posting, application management, and user authentication.
