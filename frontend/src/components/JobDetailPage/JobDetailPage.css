@@ -70,3 +70,9 @@
     background-color: #359126;
 
 }
+
+.owner-buttons{
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+}

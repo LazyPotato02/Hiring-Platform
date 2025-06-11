@@ -78,3 +78,7 @@ export async function fetchUserJobs(userId: number) {
 
     return await res.json();
 }
+
+export async function deleteJob(jobId: number): Promise<void> {
+    await axiosInstance.delete(`${API_URL}/detail/${jobId}/`);
+}

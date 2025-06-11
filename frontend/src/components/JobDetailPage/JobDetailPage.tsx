@@ -8,6 +8,7 @@ import {getApplicationStatus} from "../../api/jobApplications.tsx";
 import {useAuth} from "../../auth/AuthContect.tsx";
 import EditJobPopUp from "../EditJobPopUp/EditJobPopUp.tsx";
 import axios from "axios";
+import DeleteJobPopUp from "../DeleteJobPopUp/DeleteJobPopUp.tsx";
 
 function JobDetailPage() {
     const {id} = useParams();
@@ -16,6 +17,7 @@ function JobDetailPage() {
     const [isOpenApplyForm, setIsOpenApplyForm] = useState<boolean>(false)
     const [alreadyApplied, setAlreadyApplied] = useState<boolean>(false);
     const [isOpenEditForm, setIsOpenEditForm] = useState<boolean>(false);
+    const [isOpenDeleteForm, setIsOpenDeleteForm] = useState<boolean>(false);
     const navigate = useNavigate()
     useEffect(() => {
         const loadJob = async () => {
@@ -51,11 +53,15 @@ function JobDetailPage() {
     const openEditForm = () => {
         setIsOpenEditForm(true);
     }
-
+    const openDeleteForm = () => {
+        setIsOpenDeleteForm(true);
+    }
     const handleJobUpdate = (updatedJob: Job) => {
         setJob(updatedJob);
         setIsOpenEditForm(false);
     };
+
+
     return (
         <div className="job-container">
             <div className="job-title-wrapper">
@@ -64,7 +70,10 @@ function JobDetailPage() {
                     <button onClick={openApplyForm}>Apply For Job</button>
                 )}
                 {user && user.id == job.created_by && (
-                    <button onClick={openEditForm}> Edit</button>
+                    <div className='owner-buttons'>
+                        <button onClick={openEditForm}> Edit</button>
+                        <button onClick={openDeleteForm}> Delete</button>
+                    </div>
                 )}
                 {alreadyApplied && (
                     <p style={{ color: 'green', fontWeight: 'bold' }}>✅ You have already applied for this job.</p>
@@ -107,6 +116,14 @@ function JobDetailPage() {
                         job={job}
                         onClose={() => setIsOpenEditForm(false)}
                         onSave={handleJobUpdate}
+                    />
+                </div>
+            )}
+            {isOpenDeleteForm && (
+                <div className="popup-backdrop">
+                    <DeleteJobPopUp
+                        job={job}
+                        onClose={() => setIsOpenDeleteForm(false)}
                     />
                 </div>
             )}

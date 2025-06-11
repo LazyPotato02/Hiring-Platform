@@ -5,11 +5,12 @@ export interface TechStackItem {
 }
 
 export interface Job {
-    id: number;
-    tech_stack: TechStackItem[];
-    title: string;
-    description: string;
-    is_active: boolean;
-    posted_at: string;
-    created_by: number;
+    id: number,
+    tech_stack: TechStackItem[],
+    title: string,
+    description: string,
+    is_active: boolean,
+    posted_at: string,
+    created_by: number,
+    job?: Job
 }
